@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.aen.backend.dto.MembreUpdateDTO;
 
 import java.util.List;
 
@@ -27,7 +28,10 @@ public class MembreController {
     public ResponseEntity<MembreDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(membreService.findById(id));
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<MembreDTO> update(@PathVariable Long id, @Valid @RequestBody MembreUpdateDTO dto) {
+        return ResponseEntity.ok(membreService.update(id, dto));
+    }
     @PostMapping
     public ResponseEntity<MembreDTO> create(@Valid @RequestBody MembreCreationDTO dto) {
         MembreDTO created = membreService.create(dto);

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aen.backend.dto.MembreUpdateDTO;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,6 +68,22 @@ public class MembreService {
 
         membre = membreRepository.save(membre);
         return membreMapper.toDTO(membre);
+    }
+    @Transactional
+    public MembreDTO update(Long id, MembreUpdateDTO dto) {
+        Membre membre = membreRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Membre introuvable avec l'id : " + id));
+
+        membre.setNom(dto.getNom());
+        membre.setPrenom(dto.getPrenom());
+        membre.setTelephone(dto.getTelephone());
+        membre.setFiliere(dto.getFiliere());
+        membre.setNiveauEtudes(dto.getNiveauEtudes());
+        membre.setRoleBureau(dto.getRoleBureau());
+        membre.setActif(dto.isActif());
+
+        Membre updated = membreRepository.save(membre);
+        return membreMapper.toDTO(updated);
     }
 
     public void delete(Long id) {
