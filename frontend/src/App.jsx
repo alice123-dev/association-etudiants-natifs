@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import MainLayout from './layouts/MainLayout'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
+import Membres from './pages/Membres'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             }
           >
             <Route path="/" element={<Dashboard />} />
+            <Route path="/membres" element={<Membres />} />
           </Route>
         </Routes>
       </BrowserRouter>
