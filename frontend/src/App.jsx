@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Membres from './pages/Membres'
 import Cotisations from './pages/Cotisations'
 import Reunions from './pages/Reunions'
+import Activites from './pages/Activites'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/membres" element={<Membres />} />
             <Route path="/cotisations" element={<Cotisations />} />
             <Route path="/reunions" element={<Reunions />} />
+            <Route path="/activites" element={<Activites />} />
           </Route>
         </Routes>
       </BrowserRouter>
