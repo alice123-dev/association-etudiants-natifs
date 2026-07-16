@@ -9,5 +9,8 @@ public interface MembreRepository extends JpaRepository<Membre, Long> {
 
     List<Membre> findByActifTrue();
 
-    List<Membre> findByNomContainingIgnoreCaseOrPrenomContainingIgnoreCase(String nom, String prenom);
+    List<Membre> findByNomContainingIgnoreCaseOrPrenomContainingIgnoreCase(String nom, String prenom); 
+    long countByDateAdhesionAfter(java.time.LocalDate date);
+
+    long countByDateAdhesionBefore(java.time.LocalDate date);
 }
