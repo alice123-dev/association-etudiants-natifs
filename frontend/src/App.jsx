@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Membres from './pages/Membres'
 import Cotisations from './pages/Cotisations'
+import Reunions from './pages/Reunions'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/membres" element={<Membres />} />
             <Route path="/cotisations" element={<Cotisations />} />
+            <Route path="/reunions" element={<Reunions />} />
           </Route>
         </Routes>
       </BrowserRouter>
