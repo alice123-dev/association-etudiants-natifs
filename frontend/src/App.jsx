@@ -8,6 +8,7 @@ import Membres from './pages/Membres'
 import Cotisations from './pages/Cotisations'
 import Reunions from './pages/Reunions'
 import Activites from './pages/Activites'
+import Annonces from './pages/Annonces'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/cotisations" element={<Cotisations />} />
             <Route path="/reunions" element={<Reunions />} />
             <Route path="/activites" element={<Activites />} />
+            <Route path="/annonces" element={<Annonces />} />
           </Route>
         </Routes>
       </BrowserRouter>
