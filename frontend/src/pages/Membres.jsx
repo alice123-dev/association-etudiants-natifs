@@ -4,6 +4,8 @@ import { membreService } from '../services/membreService'
 import MembreFormModal from '../components/MembreFormModal'
 import { Search, Plus, MoreVertical, Trash2, Mail, Phone, GraduationCap, KeyRound } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { genererListeMembres } from '../utils/pdfGenerator'
+import { FileDown } from 'lucide-react'
 
 const roleBureauLabels = {
   PRESIDENT: 'Président',
@@ -92,15 +94,24 @@ function Membres() {
             {membres.length} membre{membres.length > 1 ? 's' : ''} au total
           </p>
         </div>
-        {canManage && (
-  <button
-    onClick={() => setShowModal(true)}
-    className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
-  >
-    <Plus size={17} strokeWidth={2} />
-    Ajouter un membre
-  </button>
-)}
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => genererListeMembres(filteredMembres)}
+            className="flex items-center gap-2 h-10 px-4 rounded-button border border-black/10 text-gray-600 text-sm font-medium hover:bg-black/5 transition"
+          >
+            <FileDown size={16} strokeWidth={1.75} />
+            Exporter PDF
+          </button>
+          {canManage && (
+            <button
+              onClick={() => setShowModal(true)}
+              className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
+            >
+              <Plus size={17} strokeWidth={2} />
+              Ajouter un membre
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Barre de recherche */}

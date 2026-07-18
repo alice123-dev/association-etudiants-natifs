@@ -4,6 +4,9 @@ import { toast } from 'react-toastify'
 import { cotisationService } from '../services/cotisationService'
 import CotisationFormModal from '../components/CotisationFormModal'
 import { useAuth } from '../context/AuthContext'
+import { genererRecuCotisation } from '../utils/pdfGenerator'
+import { FileDown } from 'lucide-react'
+
 const modeLabels = {
   ESPECES: 'Espèces',
   MVOLA: 'Mvola',
@@ -169,15 +172,25 @@ function Cotisations() {
                       </td>
                       <td className="px-5 py-3.5">
                       <td className="px-5 py-3.5">
-  {canManage && (
-    <button
-      onClick={() => handleDelete(c.id)}
-      className="text-gray-300 hover:text-error transition-colors"
-    >
-      <Trash2 size={16} strokeWidth={1.75} />
-    </button>
-  )}
-</td>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => genererRecuCotisation(c)}
+                            className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-secondary hover:bg-secondary/10 transition-colors"
+                            title="Télécharger le reçu"
+                          >
+                            <FileDown size={16} strokeWidth={1.75} />
+                          </button>
+                          {canManage && (
+                            <button
+                              onClick={() => handleDelete(c.id)}
+                              className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-error hover:bg-error/10 transition-colors"
+                              title="Supprimer"
+                            >
+                              <Trash2 size={16} strokeWidth={1.75} />
+                            </button>
+                          )}
+                        </div>
+                      </td>
                       </td>
                     </tr>
                   ))}
