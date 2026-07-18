@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import { membreService } from '../services/membreService'
 import MembreFormModal from '../components/MembreFormModal'
 import { Search, Plus, MoreVertical, Trash2, Mail, Phone, GraduationCap, KeyRound } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 const roleBureauLabels = {
   PRESIDENT: 'Président',
@@ -27,6 +28,7 @@ function avatarColor(id) {
 }
 
 function Membres() {
+  const { canManage } = useAuth()
   const [membres, setMembres] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -90,13 +92,15 @@ function Membres() {
             {membres.length} membre{membres.length > 1 ? 's' : ''} au total
           </p>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
-        >
-          <Plus size={17} strokeWidth={2} />
-          Ajouter un membre
-        </button>
+        {canManage && (
+  <button
+    onClick={() => setShowModal(true)}
+    className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
+  >
+    <Plus size={17} strokeWidth={2} />
+    Ajouter un membre
+  </button>
+)}
       </div>
 
       {/* Barre de recherche */}
@@ -128,12 +132,14 @@ function Membres() {
               className="bg-white rounded-card border border-black/5 p-5 relative hover:shadow-sm transition-shadow"
             >
               {/* Menu contextuel */}
-              <button
-                onClick={() => setOpenMenuId(openMenuId === membre.id ? null : membre.id)}
-                className="absolute top-4 right-4 text-gray-300 hover:text-gray-600 transition-colors p-1"
-              >
-                <MoreVertical size={17} strokeWidth={1.75} />
-              </button>
+              {canManage && (
+  <button
+    onClick={() => setOpenMenuId(openMenuId === membre.id ? null : membre.id)}
+    className="absolute top-4 right-4 text-gray-300 hover:text-gray-600 transition-colors p-1"
+  >
+    <MoreVertical size={17} strokeWidth={1.75} />
+  </button>
+)}
               {openMenuId === membre.id && (
                 <div className="absolute right-4 top-11 bg-white rounded-button shadow-lg border border-black/5 py-1 z-10 w-48">
                   <button

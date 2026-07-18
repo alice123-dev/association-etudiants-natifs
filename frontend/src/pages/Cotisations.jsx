@@ -3,7 +3,7 @@ import { Plus, Wallet, TrendingUp, AlertCircle, Trash2, Calendar } from 'lucide-
 import { toast } from 'react-toastify'
 import { cotisationService } from '../services/cotisationService'
 import CotisationFormModal from '../components/CotisationFormModal'
-
+import { useAuth } from '../context/AuthContext'
 const modeLabels = {
   ESPECES: 'Espèces',
   MVOLA: 'Mvola',
@@ -23,6 +23,7 @@ function formatMontant(montant) {
 }
 
 function Cotisations() {
+  const { canManage } = useAuth()
   const [cotisations, setCotisations] = useState([])
   const [impayes, setImpayes] = useState([])
   const [periode, setPeriode] = useState(String(new Date().getFullYear()))
@@ -92,13 +93,15 @@ function Cotisations() {
           <h2 className="font-heading text-xl font-semibold text-gray-800">Cotisations</h2>
           <p className="text-sm text-gray-500 mt-0.5">Suivi des paiements de l'association</p>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
-        >
-          <Plus size={17} strokeWidth={2} />
-          Enregistrer un paiement
-        </button>
+        {canManage && (
+  <button
+    onClick={() => setShowModal(true)}
+    className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
+  >
+    <Plus size={17} strokeWidth={2} />
+    Enregistrer un paiement
+  </button>
+)}
       </div>
 
       {/* Cartes stats */}
@@ -165,12 +168,16 @@ function Cotisations() {
                         </span>
                       </td>
                       <td className="px-5 py-3.5">
-                        <button
-                          onClick={() => handleDelete(c.id)}
-                          className="text-gray-300 hover:text-error transition-colors"
-                        >
-                          <Trash2 size={16} strokeWidth={1.75} />
-                        </button>
+                      <td className="px-5 py-3.5">
+  {canManage && (
+    <button
+      onClick={() => handleDelete(c.id)}
+      className="text-gray-300 hover:text-error transition-colors"
+    >
+      <Trash2 size={16} strokeWidth={1.75} />
+    </button>
+  )}
+</td>
                       </td>
                     </tr>
                   ))}

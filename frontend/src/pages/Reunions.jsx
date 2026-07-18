@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import { reunionService } from '../services/reunionService'
 import ReunionFormModal from '../components/ReunionFormModal'
 import PresenceModal from '../components/PresenceModal'
+import { useAuth } from '../context/AuthContext'
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('fr-FR', {
@@ -21,6 +22,7 @@ function formatHeure(dateStr) {
 }
 
 function Reunions() {
+  const { canManage } = useAuth()
   const [reunions, setReunions] = useState([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -92,13 +94,15 @@ function Reunions() {
             {reunions.length} réunion{reunions.length > 1 ? 's' : ''} planifiée{reunions.length > 1 ? 's' : ''}
           </p>
         </div>
-        <button
-          onClick={() => { setDefaultDate(''); setShowModal(true) }}
-          className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
-        >
-          <Plus size={17} strokeWidth={2} />
-          Planifier une réunion
-        </button>
+        {canManage && (
+  <button
+    onClick={() => { setDefaultDate(''); setShowModal(true) }}
+    className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
+  >
+    <Plus size={17} strokeWidth={2} />
+    Planifier une réunion
+  </button>
+)}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
@@ -163,22 +167,24 @@ function Reunions() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 shrink-0">
-                      <button
-                        onClick={() => setPresenceReunion(r)}
-                        className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-secondary hover:bg-secondary/10 transition-colors"
-                        title="Feuille de présence"
-                      >
-                        <ClipboardList size={16} strokeWidth={1.75} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(r.id)}
-                        className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-error hover:bg-error/10 transition-colors"
-                        title="Supprimer"
-                      >
-                        <Trash2 size={16} strokeWidth={1.75} />
-                      </button>
-                    </div>
+                    {canManage && (
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          onClick={() => setPresenceReunion(r)}
+                          className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-secondary hover:bg-secondary/10 transition-colors"
+                          title="Feuille de présence"
+                        >
+                          <ClipboardList size={16} strokeWidth={1.75} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(r.id)}
+                          className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-error hover:bg-error/10 transition-colors"
+                          title="Supprimer"
+                        >
+                          <Trash2 size={16} strokeWidth={1.75} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

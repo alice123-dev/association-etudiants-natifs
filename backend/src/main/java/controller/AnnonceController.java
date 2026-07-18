@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +24,14 @@ public class AnnonceController {
         return ResponseEntity.ok(annonceService.findAll());
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRATEUR', 'BUREAU')")
     @PostMapping
     public ResponseEntity<AnnonceDTO> create(@Valid @RequestBody AnnonceCreationDTO dto) {
         AnnonceDTO created = annonceService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRATEUR', 'BUREAU')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         annonceService.delete(id);

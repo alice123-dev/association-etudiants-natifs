@@ -8,6 +8,7 @@ import {
 import { toast } from 'react-toastify'
 import { activiteService } from '../services/activiteService'
 import ActiviteFormModal from '../components/ActiviteFormModal'
+import { useAuth } from '../context/AuthContext'
 
 const categorieLabels = {
   SPORT: 'Sport',
@@ -40,6 +41,7 @@ function formatDate(dateStr) {
 }
 
 function Activites() {
+  const { canManage } = useAuth()
   const [activites, setActivites] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -126,13 +128,15 @@ function Activites() {
           <h2 className="font-heading text-xl font-semibold text-gray-800">Activités</h2>
           <p className="text-sm text-gray-500 mt-0.5">Événements et activités de l'association</p>
         </div>
-        <button
-          onClick={openCreate}
-          className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
-        >
-          <Plus size={17} strokeWidth={2} />
-          Créer une activité
-        </button>
+        {canManage && (
+  <button
+    onClick={openCreate}
+    className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
+  >
+    <Plus size={17} strokeWidth={2} />
+    Créer une activité
+  </button>
+)}
       </div>
 
       {/* Cartes stats */}
@@ -257,23 +261,26 @@ function Activites() {
                       </span>
                     </td>
                     <td className="px-5 py-3.5">
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => openEdit(a)}
-                          className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-secondary hover:bg-secondary/10 transition-colors"
-                          title="Modifier"
-                        >
-                          <Pencil size={15} strokeWidth={1.75} />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(a.id)}
-                          className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-error hover:bg-error/10 transition-colors"
-                          title="Supprimer"
-                        >
-                          <Trash2 size={15} strokeWidth={1.75} />
-                        </button>
-                      </div>
+                      {canManage && (
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => openEdit(a)}
+                            className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-secondary hover:bg-secondary/10 transition-colors"
+                            title="Modifier"
+                          >
+                            <Pencil size={15} strokeWidth={1.75} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(a.id)}
+                            className="w-8 h-8 rounded-button flex items-center justify-center text-gray-400 hover:text-error hover:bg-error/10 transition-colors"
+                            title="Supprimer"
+                          >
+                            <Trash2 size={15} strokeWidth={1.75} />
+                          </button>
+                        </div>
+                      )}
                     </td>
+
                   </tr>
                 ))}
               </tbody>

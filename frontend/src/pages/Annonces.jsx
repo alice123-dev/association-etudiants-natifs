@@ -3,6 +3,7 @@ import { Plus, Pin, Trash2, Info, AlertTriangle, PartyPopper, Clock } from 'luci
 import { toast } from 'react-toastify'
 import { annonceService } from '../services/annonceService'
 import AnnonceFormModal from '../components/AnnonceFormModal'
+import { useAuth } from '../context/AuthContext'
 
 const typeConfig = {
   INFORMATION: {
@@ -35,6 +36,7 @@ function formatDate(dateStr) {
 }
 
 function Annonces() {
+  const { canManage } = useAuth()
   const [annonces, setAnnonces] = useState([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -83,13 +85,15 @@ function Annonces() {
           <h2 className="font-heading text-xl font-semibold text-gray-800">Annonces</h2>
           <p className="text-sm text-gray-500 mt-0.5">Communications de l'association</p>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
-        >
-          <Plus size={17} strokeWidth={2} />
-          Publier une annonce
-        </button>
+        {canManage && (
+          <button
+            onClick={() => setShowModal(true)}
+            className="flex items-center gap-2 h-10 px-4 rounded-button bg-primary text-white text-sm font-medium hover:brightness-110 transition"
+          >
+            <Plus size={17} strokeWidth={2} />
+            Publier une annonce
+          </button>
+        )}
       </div>
 
       {loading ? (
@@ -152,12 +156,14 @@ function Annonces() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => handleDelete(a.id)}
-                    className="text-gray-300 hover:text-error transition-colors shrink-0"
-                  >
-                    <Trash2 size={16} strokeWidth={1.75} />
-                  </button>
+                  {canManage && (
+                    <button
+                      onClick={() => handleDelete(a.id)}
+                      className="text-gray-300 hover:text-error transition-colors shrink-0"
+                    >
+                      <Trash2 size={16} strokeWidth={1.75} />
+                    </button>
+                  )}
                 </div>
               </div>
             )
