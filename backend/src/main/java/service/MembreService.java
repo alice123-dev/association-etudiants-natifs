@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aen.backend.dto.MembreUpdateDTO;
 import java.util.List;
-import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -47,12 +47,12 @@ public class MembreService {
         }
 
         // Création du compte utilisateur associé, avec un mot de passe temporaire
-        Utilisateur utilisateur = Utilisateur.builder()
-                .email(dto.getEmail())
-                .motDePasse(passwordEncoder.encode(UUID.randomUUID().toString()))
-                .role(Role.MEMBRE)
-                .actif(true)
-                .build();
+Utilisateur utilisateur = Utilisateur.builder()
+        .email(dto.getEmail())
+        .motDePasse(passwordEncoder.encode(dto.getMotDePasse()))
+        .role(Role.MEMBRE)
+        .actif(true)
+        .build();
         utilisateur = utilisateurRepository.save(utilisateur);
 
         Membre membre = Membre.builder()
@@ -85,7 +85,32 @@ public class MembreService {
         Membre updated = membreRepository.save(membre);
         return membreMapper.toDTO(updated);
     }
+    @Transactional
+    public String resetPassword(Long membreId) {
+        Membre membre = membreRepository.findById(membreId)
+                .orElseThrow(() -> new ResourceNotFoundException("Membre introuvable avec l'id : " + membreId));
 
+        if (membre.getUtilisateur() == null) {
+            throw new IllegalArgumentException("Ce membre n'a pas de compte utilisateur associé");
+        }
+
+        String nouveauMotDePasse = genererMotDePasseAleatoire();
+        Utilisateur utilisateur = membre.getUtilisateur();
+        utilisateur.setMotDePasse(passwordEncoder.encode(nouveauMotDePasse));
+        utilisateurRepository.save(utilisateur);
+
+        return nouveauMotDePasse;
+    }
+
+    private String genererMotDePasseAleatoire() {
+        String caracteres = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+        StringBuilder sb = new StringBuilder();
+        java.security.SecureRandom random = new java.security.SecureRandom();
+        for (int i = 0; i < 10; i++) {
+            sb.append(caracteres.charAt(random.nextInt(caracteres.length())));
+        }
+        return sb.toString();
+    }
     public void delete(Long id) {
         if (!membreRepository.existsById(id)) {
             throw new ResourceNotFoundException("Membre introuvable avec l'id : " + id);

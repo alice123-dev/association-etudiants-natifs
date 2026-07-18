@@ -9,11 +9,15 @@ import Cotisations from './pages/Cotisations'
 import Reunions from './pages/Reunions'
 import Activites from './pages/Activites'
 import Annonces from './pages/Annonces'
+import Profil from './pages/Profil'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ToastContainer position="top-right" autoClose={3000} />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
@@ -29,6 +33,7 @@ function App() {
             <Route path="/reunions" element={<Reunions />} />
             <Route path="/activites" element={<Activites />} />
             <Route path="/annonces" element={<Annonces />} />
+            <Route path="/profil" element={<Profil />} />
           </Route>
         </Routes>
       </BrowserRouter>

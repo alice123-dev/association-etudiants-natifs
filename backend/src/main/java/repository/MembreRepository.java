@@ -4,6 +4,7 @@ import com.aen.backend.entity.Membre;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MembreRepository extends JpaRepository<Membre, Long> {
 
@@ -13,4 +14,5 @@ public interface MembreRepository extends JpaRepository<Membre, Long> {
     long countByDateAdhesionAfter(java.time.LocalDate date);
 
     long countByDateAdhesionBefore(java.time.LocalDate date);
+    Optional<Membre> findByUtilisateurEmail(String email);
 }

@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Search, Plus, MoreVertical, Trash2, Mail, Phone, GraduationCap } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { membreService } from '../services/membreService'
 import MembreFormModal from '../components/MembreFormModal'
+import { Search, Plus, MoreVertical, Trash2, Mail, Phone, GraduationCap, KeyRound } from 'lucide-react'
 
 const roleBureauLabels = {
   PRESIDENT: 'Président',
@@ -71,7 +71,15 @@ function Membres() {
     }
     setOpenMenuId(null)
   }
-
+  const handleResetPassword = async (id) => {
+    try {
+      const result = await membreService.resetPassword(id)
+      toast.success(`Nouveau mot de passe : ${result.motDePasse}`, { autoClose: false })
+    } catch (error) {
+      toast.error('Erreur lors de la réinitialisation')
+    }
+    setOpenMenuId(null)
+  }
   return (
     <div className="pt-2">
       {/* En-tête */}
@@ -127,7 +135,14 @@ function Membres() {
                 <MoreVertical size={17} strokeWidth={1.75} />
               </button>
               {openMenuId === membre.id && (
-                <div className="absolute right-4 top-11 bg-white rounded-button shadow-lg border border-black/5 py-1 z-10 w-40">
+                <div className="absolute right-4 top-11 bg-white rounded-button shadow-lg border border-black/5 py-1 z-10 w-48">
+                  <button
+                    onClick={() => handleResetPassword(membre.id)}
+                    className="flex items-center gap-2 w-full px-3 py-2 text-xs text-gray-600 hover:bg-black/5 transition-colors"
+                  >
+                    <KeyRound size={14} strokeWidth={1.75} />
+                    Réinitialiser mot de passe
+                  </button>
                   <button
                     onClick={() => handleDelete(membre.id)}
                     className="flex items-center gap-2 w-full px-3 py-2 text-xs text-error hover:bg-error/5 transition-colors"

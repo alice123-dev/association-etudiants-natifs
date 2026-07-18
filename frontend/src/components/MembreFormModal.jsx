@@ -78,7 +78,20 @@ function MembreFormModal({ onClose, onCreated }) {
             />
             {errors.email && <p className="text-error text-xs mt-1">{errors.email.message}</p>}
           </div>
-
+          <div>
+            <label className="block text-xs text-gray-500 mb-1.5">Mot de passe initial</label>
+            <input
+              type="text"
+              placeholder="Minimum 6 caractères"
+              className="w-full h-10 px-3 rounded-button border border-black/10 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/30 transition"
+              {...register('motDePasse', {
+                required: 'Requis',
+                minLength: { value: 6, message: 'Minimum 6 caractères' },
+              })}
+            />
+            {errors.motDePasse && <p className="text-error text-xs mt-1">{errors.motDePasse.message}</p>}
+            <p className="text-xs text-gray-400 mt-1">À communiquer au membre pour sa première connexion</p>
+          </div>
           <div>
             <label className="block text-xs text-gray-500 mb-1.5">Téléphone</label>
             <input

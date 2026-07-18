@@ -1,8 +1,7 @@
-import { Bell, Moon, Sun, Search, LogOut, ChevronDown } from 'lucide-react'
+import { Bell, Moon, Sun, Search, LogOut, ChevronDown, User } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-
 const roleLabels = {
   ADMINISTRATEUR: 'Administrateur',
   BUREAU: 'Bureau',
@@ -94,6 +93,13 @@ function Navbar() {
                 <p className="text-sm font-medium text-gray-800 truncate">{user?.email}</p>
                 <p className="text-xs text-gray-400 mt-0.5">{roleLabel}</p>
               </div>
+              <button
+                onClick={() => { setMenuOpen(false); navigate('/profil') }}
+                className="flex items-center gap-2 w-full px-3.5 py-2 text-sm text-gray-700 hover:bg-black/5 transition-colors"
+              >
+                <User size={16} strokeWidth={1.75} />
+                Mon profil
+              </button>
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 w-full px-3.5 py-2 text-sm text-error hover:bg-error/5 transition-colors mt-1"

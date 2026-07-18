@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { Mail, Lock, Eye, EyeOff, GraduationCap } from 'lucide-react'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
+import { toast } from 'react-toastify'
 import api from '../services/api'
 import { useAuth } from '../context/AuthContext'
 
@@ -39,7 +39,7 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
-      <ToastContainer position="top-right" autoClose={3000} />
+     
 
       <div className="w-full max-w-4xl bg-white rounded-[32px] shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-2">
 

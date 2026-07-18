@@ -14,4 +14,8 @@ export const membreService = {
   remove: async (id) => {
     await api.delete(`/membres/${id}`)
   },
+  resetPassword: async (id) => {
+    const response = await api.post(`/membres/${id}/reset-password`)
+    return response.data
+  },
 }
