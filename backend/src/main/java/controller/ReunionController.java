@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,12 +30,14 @@ public class ReunionController {
         return ResponseEntity.ok(reunionService.findById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRATEUR', 'BUREAU')")
     @PostMapping
     public ResponseEntity<ReunionDTO> create(@Valid @RequestBody ReunionCreationDTO dto) {
         ReunionDTO created = reunionService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRATEUR', 'BUREAU')")
     @PatchMapping("/participants/{participantId}/presence")
     public ResponseEntity<Void> updatePresence(
             @PathVariable Long participantId,
@@ -44,6 +47,7 @@ public class ReunionController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRATEUR', 'BUREAU')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         reunionService.delete(id);

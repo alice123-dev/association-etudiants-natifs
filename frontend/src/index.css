@@ -1,3 +1,6 @@
+@custom-variant dark (&:where(.dark, .dark *));
+@import "tailwindcss";
+
 @import "tailwindcss";
 
 @theme {
@@ -15,6 +18,12 @@
 
   --radius-card: 12px;
   --radius-button: 8px;
+  --color-dark-bg: #10201F;
+  --color-dark-surface: #16302E;
+  --color-dark-surface-2: #1C3735;
+  --color-dark-border: #2A4442;
+  --color-dark-text: #E7EFEE;
+  --color-dark-text-muted: #9BB0AE;
 }
 
 body {
@@ -53,4 +62,31 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
   font-size: 0.7rem;
   padding: 1px 4px;
+}
+.dark .fc-custom .fc-toolbar-title {
+  color: #E7EFEE;
+}
+.dark .fc-custom .fc-button {
+  border-color: #2A4442 !important;
+  color: #9BB0AE !important;
+}
+.dark .fc-custom .fc-button:hover {
+  background: rgba(255,255,255,0.05) !important;
+}
+.dark .fc-custom .fc-daygrid-day-number {
+  color: #9BB0AE;
+}
+.dark .fc-custom th {
+  color: #9BB0AE;
+  border-color: #2A4442 !important;
+}
+.dark .fc-custom td {
+  border-color: #2A4442 !important;
+  background: #16302E;
+}
+.dark .fc-custom .fc-day-today {
+  background: rgba(29, 111, 106, 0.15) !important;
+}
+.dark .fc-custom .fc-scrollgrid {
+  border-color: #2A4442 !important;
 }

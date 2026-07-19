@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/profil")
 @RequiredArgsConstructor
@@ -20,7 +23,11 @@ public class ProfilController {
     public ResponseEntity<ProfilDTO> getProfil() {
         return ResponseEntity.ok(profilService.getProfil());
     }
-
+    @PostMapping("/photo")
+    public ResponseEntity<Map<String, String>> uploadPhoto(@RequestParam("file") MultipartFile file) {
+        String url = profilService.uploadPhoto(file);
+        return ResponseEntity.ok(Map.of("photoUrl", url));
+    }
     @PutMapping
     public ResponseEntity<ProfilDTO> updateProfil(@RequestBody ProfilUpdateDTO dto) {
         return ResponseEntity.ok(profilService.updateProfil(dto));

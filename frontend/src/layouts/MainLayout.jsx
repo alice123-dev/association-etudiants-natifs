@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 
 function MainLayout() {
   return (
-    <div className="flex h-screen bg-background p-6 gap-6">
+    <div className="flex h-screen bg-background dark:bg-dark-bg p-6 gap-6 transition-colors">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />

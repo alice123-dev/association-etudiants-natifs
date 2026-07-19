@@ -89,8 +89,8 @@ function Reunions() {
       {/* En-tête */}
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="font-heading text-xl font-semibold text-gray-800">Réunions</h2>
-          <p className="text-sm text-gray-500 mt-0.5">
+        <h2 className="font-heading text-xl font-semibold text-gray-800 dark:text-dark-text">Réunions</h2>
+        <p className="text-sm text-gray-500 dark:text-dark-text-muted mt-0.5">
             {reunions.length} réunion{reunions.length > 1 ? 's' : ''} planifiée{reunions.length > 1 ? 's' : ''}
           </p>
         </div>
@@ -107,7 +107,7 @@ function Reunions() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         {/* Calendrier */}
-        <div className="lg:col-span-2 bg-white rounded-card border border-black/5 p-4 fc-custom">
+        <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-card border border-black/5 dark:border-dark-border p-4 fc-custom transition-colors">
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
@@ -121,27 +121,27 @@ function Reunions() {
         </div>
 
         {/* Table premium */}
-        <div className="lg:col-span-3 bg-white rounded-card border border-black/5 overflow-hidden">
-          <div className="px-5 py-4 border-b border-black/5">
-            <p className="font-heading text-base font-semibold text-gray-800">Liste des réunions</p>
-          </div>
+        <div className="lg:col-span-3 bg-white dark:bg-dark-surface rounded-card border border-black/5 dark:border-dark-border overflow-hidden transition-colors">
+  <div className="px-5 py-4 border-b border-black/5 dark:border-dark-border">
+    <p className="font-heading text-base font-semibold text-gray-800 dark:text-dark-text">Liste des réunions</p>
+  </div>
 
           {loading ? (
-            <div className="p-10 text-center text-sm text-gray-400">Chargement...</div>
+            <div className="p-10 text-center text-sm text-gray-400 dark:text-dark-text-muted">Chargement...</div>
           ) : sortedReunions.length === 0 ? (
-            <div className="p-10 text-center text-sm text-gray-400">Aucune réunion planifiée</div>
+            <div className="p-10 text-center text-sm text-gray-400 dark:text-dark-text-muted">Aucune réunion planifiée</div>
           ) : (
-            <div className="divide-y divide-black/5">
+            <div className="divide-y divide-black/5 dark:divide-dark-border">
               {sortedReunions.map((r) => (
-                <div key={r.id} className="px-5 py-4 hover:bg-gray-50/50 transition-colors">
+                <div key={r.id} className="px-5 py-4 hover:bg-gray-50/50 dark:hover:bg-dark-surface-2 transition-colors">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2.5 mb-1.5">
-                        <p className="font-medium text-gray-800 truncate">{r.titre}</p>
+                      <p className="font-medium text-gray-800 dark:text-dark-text truncate">{r.titre}</p>
                         <span
                           className={`text-xs px-2.5 py-0.5 rounded-full font-medium shrink-0 ${
                             isPassed(r.dateHeure)
-                              ? 'bg-gray-100 text-gray-500'
+                              ? 'bg-gray-100 dark:bg-dark-surface-2 text-gray-500 dark:text-dark-text-muted'
                               : 'bg-success/10 text-success'
                           }`}
                         >
@@ -149,7 +149,7 @@ function Reunions() {
                         </span>
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-dark-text-muted">
                         <div className="flex items-center gap-1.5">
                           <Clock size={13} strokeWidth={1.75} className="text-gray-400" />
                           {formatDate(r.dateHeure)} · {formatHeure(r.dateHeure)}

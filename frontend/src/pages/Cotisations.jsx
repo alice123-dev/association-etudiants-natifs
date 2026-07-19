@@ -93,8 +93,8 @@ function Cotisations() {
       {/* En-tête */}
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h2 className="font-heading text-xl font-semibold text-gray-800">Cotisations</h2>
-          <p className="text-sm text-gray-500 mt-0.5">Suivi des paiements de l'association</p>
+        <h2 className="font-heading text-xl font-semibold text-gray-800 dark:text-dark-text">Cotisations</h2>
+        <p className="text-sm text-gray-500 dark:text-dark-text-muted mt-0.5">Suivi des paiements de l'association</p>
         </div>
         {canManage && (
   <button
@@ -109,44 +109,44 @@ function Cotisations() {
 
       {/* Cartes stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
-        <div className="bg-white rounded-card p-5 border border-black/5">
+      <div className="bg-white dark:bg-dark-surface rounded-card p-5 border border-black/5 dark:border-dark-border transition-colors">
           <div className="w-10 h-10 rounded-button flex items-center justify-center bg-success/10 text-success">
             <Wallet size={18} strokeWidth={1.75} />
           </div>
-          <p className="text-2xl font-semibold text-gray-800 mt-4">{formatMontant(totalCollecte)}</p>
-          <p className="text-sm text-gray-500 mt-0.5">Total collecté</p>
+          <p className="text-2xl font-semibold text-gray-800 dark:text-dark-text mt-4">{formatMontant(totalCollecte)}</p>
+<p className="text-sm text-gray-500 dark:text-dark-text-muted mt-0.5">Total collecté</p>
         </div>
-        <div className="bg-white rounded-card p-5 border border-black/5">
+        <div className="bg-white dark:bg-dark-surface rounded-card p-5 border border-black/5 dark:border-dark-border transition-colors">
           <div className="w-10 h-10 rounded-button flex items-center justify-center bg-secondary/10 text-secondary">
             <TrendingUp size={18} strokeWidth={1.75} />
           </div>
-          <p className="text-2xl font-semibold text-gray-800 mt-4">{cotisations.length}</p>
-          <p className="text-sm text-gray-500 mt-0.5">Paiements enregistrés</p>
+          <p className="text-2xl font-semibold text-gray-800 dark:text-dark-text mt-4">{cotisations.length}</p>
+          <p className="text-sm text-gray-500 dark:text-dark-text-muted mt-0.5">Paiements enregistrés</p>
         </div>
-        <div className="bg-white rounded-card p-5 border border-black/5">
+        <div className="bg-white dark:bg-dark-surface rounded-card p-5 border border-black/5 dark:border-dark-border transition-colors">
           <div className="w-10 h-10 rounded-button flex items-center justify-center bg-error/10 text-error">
             <AlertCircle size={18} strokeWidth={1.75} />
           </div>
-          <p className="text-2xl font-semibold text-gray-800 mt-4">{impayes.length}</p>
-          <p className="text-sm text-gray-500 mt-0.5">Impayés ({periode})</p>
+          <p className="text-2xl font-semibold text-gray-800 dark:text-dark-text mt-4">{impayes.length}</p>
+          <p className="text-sm text-gray-500 dark:text-dark-text-muted mt-0.5">Impayés ({periode})</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Tableau des paiements */}
-        <div className="lg:col-span-2 bg-white rounded-card border border-black/5 overflow-hidden">
-          <div className="px-5 py-4 border-b border-black/5">
-            <p className="font-heading text-base font-semibold text-gray-800">Historique des paiements</p>
-          </div>
+        <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-card border border-black/5 dark:border-dark-border overflow-hidden transition-colors">
+  <div className="px-5 py-4 border-b border-black/5 dark:border-dark-border">
+    <p className="font-heading text-base font-semibold text-gray-800 dark:text-dark-text">Historique des paiements</p>
+  </div>
           {loading ? (
-            <div className="p-10 text-center text-sm text-gray-400">Chargement...</div>
+            <div className="p-10 text-center text-sm text-gray-400 dark:text-dark-text-muted">Chargement...</div>
           ) : cotisations.length === 0 ? (
-            <div className="p-10 text-center text-sm text-gray-400">Aucun paiement enregistré</div>
+            <div className="p-10 text-center text-sm text-gray-400 dark:text-dark-text-muted" >Aucun paiement enregistré</div>
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-black/5 bg-gray-50/50">
-                  <th className="text-left font-medium text-gray-500 px-5 py-3">Membre</th>
+              <tr className="border-b border-black/5 dark:border-dark-border bg-gray-50/50 dark:bg-dark-surface-2">
+              <th className="text-left font-medium text-gray-500 dark:text-dark-text-muted px-5 py-3">Membre</th>
                   <th className="text-left font-medium text-gray-500 px-5 py-3">Montant</th>
                   <th className="text-left font-medium text-gray-500 px-5 py-3">Période</th>
                   <th className="text-left font-medium text-gray-500 px-5 py-3">Mode</th>
@@ -158,13 +158,13 @@ function Cotisations() {
                   .slice()
                   .sort((a, b) => new Date(b.datePaiement) - new Date(a.datePaiement))
                   .map((c) => (
-                    <tr key={c.id} className="border-b border-black/5 last:border-0 hover:bg-gray-50/50 transition-colors">
+                    <tr key={c.id} className="border-b border-black/5 dark:border-dark-border last:border-0 hover:bg-gray-50/50 dark:hover:bg-dark-surface-2 transition-colors">
                       <td className="px-5 py-3.5">
-                        <p className="font-medium text-gray-800">{c.membreNomComplet}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">{c.datePaiement}</p>
+                      <p className="font-medium text-gray-800 dark:text-dark-text">{c.membreNomComplet}</p>
+                      <p className="text-xs text-gray-400 dark:text-dark-text-muted mt-0.5">{c.datePaiement}</p>
                       </td>
-                      <td className="px-5 py-3.5 text-gray-800 font-medium">{formatMontant(c.montant)}</td>
-                      <td className="px-5 py-3.5 text-gray-600">{c.periodeLibelle}</td>
+                      <td className="px-5 py-3.5 text-gray-800 dark:text-dark-text font-medium">{formatMontant(c.montant)}</td>
+<td className="px-5 py-3.5 text-gray-600 dark:text-dark-text-muted">{c.periodeLibelle}</td>
                       <td className="px-5 py-3.5">
                         <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${modeColors[c.modePaiement]}`}>
                           {modeLabels[c.modePaiement]}
@@ -200,31 +200,31 @@ function Cotisations() {
         </div>
 
         {/* Impayés */}
-        <div className="bg-white rounded-card border border-black/5 p-5">
-          <div className="flex items-center justify-between mb-4">
-            <p className="font-heading text-base font-semibold text-gray-800">Impayés</p>
+        <div className="bg-white dark:bg-dark-surface rounded-card border border-black/5 dark:border-dark-border p-5 transition-colors">
+  <div className="flex items-center justify-between mb-4">
+    <p className="font-heading text-base font-semibold text-gray-800 dark:text-dark-text">Impayés</p>
             <div className="relative">
               <Calendar size={14} strokeWidth={1.75} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
-                type="text"
-                value={periode}
-                onChange={(e) => setPeriode(e.target.value)}
-                className="w-24 h-8 pl-7 pr-2 rounded-button border border-black/10 text-xs focus:outline-none focus:ring-2 focus:ring-secondary/30 transition"
-              />
+  type="text"
+  value={periode}
+  onChange={(e) => setPeriode(e.target.value)}
+  className="w-24 h-8 pl-7 pr-2 rounded-button border border-black/10 dark:border-dark-border bg-white dark:bg-dark-surface-2 text-gray-800 dark:text-dark-text text-xs focus:outline-none focus:ring-2 focus:ring-secondary/30 transition"
+/>
             </div>
           </div>
 
           {loadingImpayes ? (
-            <p className="text-sm text-gray-400 text-center py-6">Chargement...</p>
+            <p className="text-sm text-gray-400 dark:text-dark-text-muted text-center py-6">Chargement...</p>
           ) : impayes.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-6">Aucun impayé pour cette période 🎉</p>
+            <p className="text-sm text-gray-400 dark:text-dark-text-muted text-center py-6">Aucun impayé pour cette période 🎉</p>
           ) : (
             <div className="space-y-3">
               {impayes.map((m) => (
                 <div key={m.membreId} className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{m.nomComplet}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{m.email || '—'}</p>
+                  <p className="text-sm font-medium text-gray-800 dark:text-dark-text">{m.nomComplet}</p>
+                  <p className="text-xs text-gray-400 dark:text-dark-text-muted mt-0.5">{m.email || '—'}</p>
                   </div>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-error/10 text-error font-medium">
                     Impayé
